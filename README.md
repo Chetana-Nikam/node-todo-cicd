@@ -1,4 +1,4 @@
-# node-todo-cicd
+# node_todo_cicd
 
 Run these commands:
 
