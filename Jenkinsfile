@@ -11,7 +11,7 @@ pipeline {
         }
         stage("build and test"){
             steps{
-                sh "docker build -t node-app-test-new ."
+                sh "sudo docker build -t node-app-test-new ."
                 echo 'code build bhi ho gaya'
             }
         }
@@ -23,16 +23,16 @@ pipeline {
         stage("push"){
             steps{
                 withCredentials([usernamePassword(credentialsId:"dockerHub",passwordVariable:"dockerHubPass",usernameVariable:"dockerHubUser")]){
-                sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPass}"
-                sh "docker tag node-app-test-new:latest ${env.dockerHubUser}/node-app-test-new:latest"
-                sh "docker push ${env.dockerHubUser}/node-app-test-new:latest"
+                sh "sudo docker login -u ${env.dockerHubUser} -p ${env.dockerHubPass}"
+                sh "sudo docker tag node-app-test-new:latest ${env.dockerHubUser}/node-app-test-new:latest"
+                sh "sudo docker push ${env.dockerHubUser}/node-app-test-new:latest"
                 echo 'image push ho gaya'
                 }
             }
         }
         stage("deploy"){
             steps{
-                sh "docker-compose down && docker-compose up -d"
+                sh "sudo docker-compose down && docker-compose up -d"
                 echo 'deployment ho gayi'
             }
         }
